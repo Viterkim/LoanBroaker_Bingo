@@ -1,0 +1,3 @@
+1. Write every "part" of the Loan Broker design as a typescript program
+2. Create a dockerfile for every program
+3. https://tinyurl.com/8585mille8585
