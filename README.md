@@ -1,4 +1,9 @@
-Loanbroaker description of filters(small programs made in node, running in a docker image):
+# Loanbroaker description of filters(small programs made in node, running in a docker image):
+
+## Typescript startup
+npm i typescript -g
+in visual code: ctrl+shift+b = tsc-watch
+Before a normal build: tsc
 
 Lona Request ->
 Start of data:

@@ -5,3 +5,10 @@
 cloudamqp.com acc details:
 email: zosurotar@amadamus.com
 password: mingade85
+
+
+
+GetCreditScore:
+1. Listen on get request (some address)
+2. Make call to shitty SOAP service, get value
+3. Send value to LONEBROAKER
