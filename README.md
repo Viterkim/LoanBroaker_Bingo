@@ -11,6 +11,9 @@ Before a normal build: tsc
 ## Read this!
 https://medium.com/@caleblemoine/how-to-perform-soap-requests-with-node-js-4a9627070eb6
 
+https://www.rabbitmq.com/tutorials/tutorial-two-javascript.html
+
+We're using AMQP for rabbitmq handling. (Using workerqueues as "loadbalancers"), almost all the "pods" will be a worker. (check code above).
 
 ## Project Setup (description of filters and pipes)
 ### Request comes in
