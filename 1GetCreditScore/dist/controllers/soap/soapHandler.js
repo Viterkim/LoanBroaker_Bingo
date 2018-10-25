@@ -39,31 +39,51 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = __importDefault(require("fs"));
+var xml2js = require('xml2js');
 var soapRequest = require('easy-soap-request');
 var regexReplace = /({\?\?\?})/;
-function soap() {
-    var _this = this;
-    // example data
-    var url = 'http://datdb.cphbusiness.dk:8080/CreditScoreService/CreditScoreService';
-    var headers = {
-        'Content-Type': 'text/xml;charset=UTF-8'
-    };
-    var newValue = '858585-8585';
-    var xml = fs_1.default.readFileSync('./xml/CreditScoreService.xml', 'utf-8').replace(regexReplace, newValue);
-    // usage of module
-    (function () { return __awaiter(_this, void 0, void 0, function () {
-        var response, body, statusCode;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, soapRequest(url, headers, xml)];
-                case 1:
-                    response = (_a.sent()).response;
-                    body = response.body, statusCode = response.statusCode;
-                    console.log(body);
-                    console.log(statusCode);
-                    return [2 /*return*/];
-            }
-        });
-    }); })();
+function isValidSSN(ssn) {
+    return ssn.ssn.match(/\d{6}-\d{4}/);
 }
-exports.soap = soap;
+function getValueFromResponse(response) {
+    return parseInt(response["S:Envelope"]["S:Body"]["0"]["ns2:creditScoreResponse"]["0"].return["0"]);
+}
+function getCreditScoreFromService(ssn) {
+    var _this = this;
+    if (ssn === void 0) { ssn = { ssn: '858585-8585' }; }
+    return new Promise(function (resolve, reject) {
+        if (!isValidSSN(ssn)) {
+            reject('Invalid ssn');
+            return;
+        }
+        // example data
+        var url = 'http://datdb.cphbusiness.dk:8080/CreditScoreService/CreditScoreService';
+        var headers = {
+            'Content-Type': 'text/xml;charset=UTF-8'
+        };
+        var xml = fs_1.default.readFileSync('./resources/xml/CreditScoreService.xml', 'utf-8').replace(regexReplace, ssn.ssn);
+        // usage of module
+        (function () { return __awaiter(_this, void 0, void 0, function () {
+            var response, body, statusCode;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, soapRequest(url, headers, xml)];
+                    case 1:
+                        response = (_a.sent()).response;
+                        body = response.body, statusCode = response.statusCode;
+                        xml2js.parseString(body, function (err, result) {
+                            if (err) {
+                                reject(err);
+                            }
+                            resolve({
+                                creditScore: getValueFromResponse(result),
+                                ssn: ssn.ssn
+                            });
+                        });
+                        return [2 /*return*/];
+                }
+            });
+        }); })();
+    });
+}
+exports.getCreditScoreFromService = getCreditScoreFromService;

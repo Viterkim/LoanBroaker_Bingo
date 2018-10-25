@@ -1,0 +1,9 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.web.credit.bank.org/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ser:creditScore>
+         <!--Optional:-->
+         <ssn>{???}</ssn>
+      </ser:creditScore>
+   </soapenv:Body>
+</soapenv:Envelope>
