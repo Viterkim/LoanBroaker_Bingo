@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { creditScore, creditScoreResponse, socialSecurityNumber } from '../../../../types/CreditTypes';
+import { creditScore, creditScoreResponse, socialSecurityNumber } from '../../types/CreditTypes';
 const xml2js = require('xml2js');
 const soapRequest = require('easy-soap-request');
 
@@ -9,7 +9,7 @@ function isValidSSN(ssn: socialSecurityNumber) {
     return ssn.ssn.match(/\d{6}-\d{4}/);
 }
 
-function getValueFromResponse(response: creditScoreResponse): number {
+export function getValueFromResponse(response: creditScoreResponse): number {
     return parseInt(response["S:Envelope"]["S:Body"]["0"]["ns2:creditScoreResponse"]["0"].return["0"]);
 }
 
@@ -35,16 +35,24 @@ export function getCreditScoreFromService(ssn: socialSecurityNumber = { ssn: '85
                 reject(`Server returned status code: ${statusCode}`);
                 return;
             }
-            xml2js.parseString(body, (err: Error, result: creditScoreResponse) => {
-                if (err) {
-                    reject(err);
-                }
-                resolve({
-                    creditScore: getValueFromResponse(result),
-                    ssn: ssn.ssn
-                });
+            const result = await parseXML(body);
+            resolve({
+                creditScore: getValueFromResponse(result),
+                ssn: ssn.ssn
             });
         })();
     })
     
+}
+
+export function parseXML(body: any): Promise<creditScoreResponse> {
+    return new Promise((resolve, reject) => {
+        xml2js.parseString(body, (err: Error, result: creditScoreResponse) => {
+            if (err) {
+                reject(err);
+                return;
+            }
+            resolve(result);
+        });
+    })
 }
