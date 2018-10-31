@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { creditScore, creditScoreResponse, socialSecurityNumber } from '../../../../types/CreditTypes';
+import { creditScore, creditScoreResponse, socialSecurityNumber } from '../../types/CreditTypes';
 const xml2js = require('xml2js');
 const soapRequest = require('easy-soap-request');
 

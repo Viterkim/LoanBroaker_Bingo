@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/app",
     "dev": "nodemon dist/app",
-    "typesW": "DEL /Q /F \"./src/types\" && echo d | xcopy \"../types\" \"./src/types\" /E"
+    "typesW": "DEL /Q /F /S \"./src/types\" 2>nul && echo d 2>nul | xcopy \"../types\" \"./src/types\" /E 2>nul"
   },
   "keywords": [],
   "author": "",
