@@ -5,11 +5,6 @@ import { socialSecurityNumber } from '../../../types/CreditTypes';
 
 const router: Router = Router();
 
-interface creditScore {
-    ssn: string;
-    creditScore: number;
-}
-
 router.get('/', (req, res) => {
     getCreditScoreFromService().then((newCreditScore) => {
         sendToRabbit(JSON.stringify(newCreditScore), 'CreditService').then((result) => {
