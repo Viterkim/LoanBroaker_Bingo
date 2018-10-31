@@ -41,7 +41,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = __importDefault(require("fs"));
 var xml2js = require('xml2js');
 var soapRequest = require('easy-soap-request');
-var regexReplace = /({\?\?\?})/;
+var REGEX_REPLACE = /({\?\?\?})/;
 function isValidSSN(ssn) {
     return ssn.ssn.match(/\d{6}-\d{4}/);
 }
@@ -61,7 +61,7 @@ function getCreditScoreFromService(ssn) {
         var headers = {
             'Content-Type': 'text/xml;charset=UTF-8'
         };
-        var xml = fs_1.default.readFileSync('./resources/xml/CreditScoreService.xml', 'utf-8').replace(regexReplace, ssn.ssn);
+        var xml = fs_1.default.readFileSync('./resources/xml/CreditScoreService.xml', 'utf-8').replace(REGEX_REPLACE, ssn.ssn);
         // usage of module
         (function () { return __awaiter(_this, void 0, void 0, function () {
             var response, body, statusCode;
@@ -71,6 +71,10 @@ function getCreditScoreFromService(ssn) {
                     case 1:
                         response = (_a.sent()).response;
                         body = response.body, statusCode = response.statusCode;
+                        if (statusCode !== 200) {
+                            reject("Server returned status code: " + statusCode);
+                            return [2 /*return*/];
+                        }
                         xml2js.parseString(body, function (err, result) {
                             if (err) {
                                 reject(err);
