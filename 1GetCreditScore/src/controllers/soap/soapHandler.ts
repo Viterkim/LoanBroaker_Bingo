@@ -1,40 +1,9 @@
 import fs from 'fs';
+import { creditScore, creditScoreResponse, socialSecurityNumber } from '../../../../types/CreditTypes';
 const xml2js = require('xml2js');
 const soapRequest = require('easy-soap-request');
-const regexReplace = /({\?\?\?})/;
 
-/**
- * This is made to allow easier parsing of xml response.
- * It might look bad, but try parsing the return result from this manually:
- * {"S:Envelope":{"$":{"xmlns:S":"http://schemas.xmlsoap.org/soap/envelope/"},"S:Body":[{"ns2:creditScoreResponse":[{"$":{"xmlns:ns2":"http://service.web.credit.bank.org/"},"return":["228"]}]}]}}
- */
-interface creditScoreResponse {
-    'S:Envelope': {
-        '$': {
-            'xmlns:S': string;
-            
-        },
-        'S:Body': [{
-            'ns2:creditScoreResponse': [{
-                '$': {
-                    'xmlns:ns2': string;
-                },
-                'return': [
-                    string
-                ]
-            }]
-        }]
-    };
-}
-
-export interface socialSecurityNumber {
-    ssn: string
-}
-
-interface creditScore {
-    ssn: string;
-    creditScore: number;
-}
+const REGEX_REPLACE = /({\?\?\?})/;
 
 function isValidSSN(ssn: socialSecurityNumber) {
     return ssn.ssn.match(/\d{6}-\d{4}/);
@@ -56,12 +25,16 @@ export function getCreditScoreFromService(ssn: socialSecurityNumber = { ssn: '85
             'Content-Type': 'text/xml;charset=UTF-8'
         };
 
-        const xml = fs.readFileSync('./resources/xml/CreditScoreService.xml', 'utf-8').replace(regexReplace, ssn.ssn);
+        const xml = fs.readFileSync('./resources/xml/CreditScoreService.xml', 'utf-8').replace(REGEX_REPLACE, ssn.ssn);
 
         // usage of module
         (async () => {
             const { response } = await soapRequest(url, headers, xml);
             const { body, statusCode } = response;
+            if (statusCode !== 200) {
+                reject(`Server returned status code: ${statusCode}`);
+                return;
+            }
             xml2js.parseString(body, (err: Error, result: creditScoreResponse) => {
                 if (err) {
                     reject(err);
