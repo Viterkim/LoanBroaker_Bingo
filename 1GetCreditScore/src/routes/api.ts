@@ -1,6 +1,7 @@
 import { Request, Response, Router } from 'express'
-import { getCreditScoreFromService, socialSecurityNumber } from '../controllers/soap/soapHandler';
+import { getCreditScoreFromService } from '../controllers/soap/soapHandler';
 import { sendToRabbit } from '../controllers/rabbitmq/rabbitPublisher';
+import { socialSecurityNumber } from '../../../types/CreditTypes';
 
 const router: Router = Router();
 
