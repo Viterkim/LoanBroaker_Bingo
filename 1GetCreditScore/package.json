@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/app",
-    "dev": "nodemon dist/app"
+    "dev": "nodemon dist/app",
+    "typesW": "echo d | xcopy \"../types\" \"./src/types\" /E"
   },
   "keywords": [],
   "author": "",
