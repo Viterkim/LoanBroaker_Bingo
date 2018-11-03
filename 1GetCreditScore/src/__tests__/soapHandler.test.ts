@@ -1,5 +1,5 @@
 
-import { getValueFromResponse, parseXML } from '../controllers/soap/soapHandler';
+import { getValueFromResponse, parseXML, getCreditScoreFromService } from '../controllers/soap/soapHandler';
 import { creditScoreResponse } from '../types/CreditTypes';
 
 
@@ -21,4 +21,11 @@ test('Parse XML to JSON', async (done) => {
 
 test('Extract number from JSON after parse', () => {
     expect(getValueFromResponse(expectJSON)).toBe(5);
+})
+
+test('Can get credit score from service', (done) => {
+    getCreditScoreFromService('858585-8585').then((result) => {
+        expect(typeof(result.creditScore)).toBe('number');
+        done();
+    })
 })

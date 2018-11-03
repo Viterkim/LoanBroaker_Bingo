@@ -1,0 +1,8 @@
+<soapenv:Envelope>
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ser:ruleBase>
+        <creditScore>{???}</creditScore>
+      </ser:ruleBase>
+   </soapenv:Body>
+</soapenv:Envelope>

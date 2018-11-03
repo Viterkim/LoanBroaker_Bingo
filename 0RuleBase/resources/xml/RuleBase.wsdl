@@ -1,0 +1,11 @@
+<definitions>
+    
+    <types>
+        <>
+    </types>
+
+    <message name="getRuleRequest">
+        <part name="creditScore" type="xs:int"/>
+    </message>
+
+</definitions>

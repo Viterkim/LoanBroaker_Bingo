@@ -22,11 +22,14 @@ export interface creditScoreResponse {
     };
 }
 
-export interface socialSecurityNumber {
-    ssn: string
-}
-
 export interface creditScore {
     ssn: string;
     creditScore: number;
+}
+
+export interface loanObject {
+    ssn: string;
+    loanAmount: number;
+    loanDuration: number;
+    creditScore?: number;
 }

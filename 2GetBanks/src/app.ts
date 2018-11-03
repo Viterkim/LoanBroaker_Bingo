@@ -1,11 +1,7 @@
+import { watchRabbit } from './controllers/api/api';
 
-import { getFromRabbit } from './controllers/rabbitmq/rabbitWorker';
+//1) Get credit score from "CreditService" channel in RabbitMQ.
+//2) Get Rule Base for credit score - select banks based on that.
+//3) Send to RabbitMQ channel "BankRecipients", data: BankID, ssn, credit score, loan duration, loan amount
 
-setInterval(() => {
-    getFromRabbit('CreditService').then((result) => {
-        console.log(result);
-    }).catch((err) => {
-        console.log(err);
-    })   
-}, 100);
-
+watchRabbit();
