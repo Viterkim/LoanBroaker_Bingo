@@ -38,11 +38,15 @@ export function getCreditScoreFromService(ssn: string = '858585-8585'): Promise<
                 reject(`Server returned status code: ${statusCode}`);
                 return;
             }
-            const result = await parseXML(body);
-            resolve({
-                creditScore: getValueFromResponse(result),
-                ssn: ssn
-            });
+            try {
+                const result = await parseXML(body);
+                resolve({
+                    creditScore: getValueFromResponse(result),
+                    ssn: ssn
+                });
+            } catch (err) {
+                reject(err);
+            }
         })();
     })
     
