@@ -9,6 +9,10 @@ export function getBanksFromRating(rating: number) {
     connection.query('SELECT * from bank WHERE minRating <= ?',
       [rating],
       (error: any, results: Array<Bank>, fields: any) => {
+        if(error){
+          reject(error);
+        }
+        console.log(results);
         resolve(results);
     });
   });

@@ -6,15 +6,25 @@ const bodyParser = require('body-parser');
 const xml = fs.readFileSync(path.resolve(__dirname, "../resources/xml/RuleBase.wsdl"), 'utf8')
 import { getBanksFromRating } from './controllers/mysql/queries';
 
+
+// Async does NOT work! Does not wait with promises, fix!!!
 const myService = {
     RuleBaseService: {
         RuleBasePort: {
         RuleBaseOperation: function (args: any) {
             getBanksFromRating(args.rating.$value).then((banksArr) => {
+                console.log('Start of getBanks');
                 return {
                     bankListJSON: JSON.stringify(banksArr)
                 };
+            }).catch((err) => {
+                return {
+                    bankListJSON: "-1"
+                }
             });
+            return {
+                bankListJSON: 'default'
+            }
         }
       }
     }

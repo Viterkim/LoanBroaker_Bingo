@@ -1,10 +1,10 @@
 import mysql, { Connection } from 'mysql';
 
 let connection: Connection = mysql.createConnection({
-    host: '',
-    user: '',
-    password: '',
-    database: ''
+    host: 'viter.dk',
+    user: 'transformer',
+    password: 'mingade',
+    database: 'lonebroaker'
 });
 
 
