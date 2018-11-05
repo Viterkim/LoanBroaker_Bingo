@@ -1,51 +1,33 @@
-<definitions name = "RuleBaseService"
-  targetNamespace = "http://localhost/wsdl/RuleBaseService.wsdl"
-  xmlns = "http://schemas.xmlsoap.org/wsdl/"
-  xmlns:soap = "http://schemas.xmlsoap.org/wsdl/soap/"
-  xmlns:tns = "http://localhost/wsdl/RuleBaseService.wsdl"
-  xmlns:xsd = "http://www.w3.org/2001/XMLSchema">
-
-  <message name = "RuleBaseRequest">
-    <part name = "rating" type = "xsd:integer"/>
-  </message>
-    
-  <message name = "RuleBaseReponse">
-    <part name = "bankListJSON" type = "xsd:string"/>
-  </message>
-
-  <portType name = "RuleBase_PortType">
-    <operation name = "RuleBaseOperation">
-        <input message = "tns:RuleBaseRequest"/>
-        <output message = "tns:RuleBaseReponse"/>
-    </operation>
-  </portType>
-
-  <binding name = "RuleBase_Binding" type = "tns:RuleBase_PortType">
-    <soap:binding style = "rpc"
-        transport = "http://schemas.xmlsoap.org/soap/http"/>
-    <operation name = "RuleBaseOperation">
-        <soap:operation soapAction = "RuleBaseOperation"/>
-        <input>
-          <soap:body
-              encodingStyle = "http://schemas.xmlsoap.org/soap/encoding/"
-              namespace = "urn:examples:rulebaseservice"
-              use = "encoded"/>
-        </input>
-          
-        <output>
-          <soap:body
-              encodingStyle = "http://schemas.xmlsoap.org/soap/encoding/"
-              namespace = "urn:examples:rulebaseservice"
-              use = "encoded"/>
-        </output>
-    </operation>
-  </binding>
-
-  <service name = "RuleBaseService">
-    <documentation>WSDL File for RuleBaseService</documentation>
-    <port binding = "tns:RuleBase_Binding" name = "RuleBasePort">
-        <soap:address
-          location = "http://localhost/RuleBaseOperation/" />
-    </port>
-  </service>
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.examples.com/wsdl/RuleBaseService.wsdl" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="RuleBaseService" targetNamespace="http://www.examples.com/wsdl/RuleBaseService.wsdl">
+   <message name="RuleBaseRequest">
+      <part name="rating" type="xsd:integer" />
+   </message>
+   <message name="RuleBaseResponse">
+      <part name="bankListJSON" type="xsd:string" />
+   </message>
+   <portType name="RuleBasePortType">
+      <operation name="RuleBaseOperation">
+         <input message="tns:RuleBaseRequest" />
+         <output message="tns:RuleBaseResponse" />
+      </operation>
+   </portType>
+   <binding name="RuleBaseBinding" type="tns:RuleBasePortType">
+      <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+      <operation name="RuleBaseOperation">
+         <soap:operation soapAction="RuleBaseOperation" />
+         <input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:examples:rulebaseservice" use="encoded" />
+         </input>
+         <output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:examples:rulebaseservice" use="encoded" />
+         </output>
+      </operation>
+   </binding>
+   <service name="RuleBaseService">
+      <documentation>WSDL File for RuleBaseService</documentation>
+      <port binding="tns:RuleBaseBinding" name="RuleBasePort">
+         <soap:address location="http://localhost:8001/wsdl/" />
+      </port>
+   </service>
 </definitions>

@@ -1,23 +1,28 @@
-import { soap } from 'express-soap';
-import express from 'express';
-import fs from 'fs';
-const app = express();
-const path = require("path");
- 
-app.use('/soap/rulebase', soap({
-    services: {
-        RuleBaseService: {
-            RuleBase: {
-                RuleBaseOperation({rating} : any, res: any) {
-                    res({
-                        result: "skyyyyt" + rating
-                    });
-                }
-              }
+const myService = {
+    RuleBaseService: {
+        RuleBasePort: {
+        RuleBaseOperation: function (args: any) {
+            return {
+                bankListJSON: args.rating.$value
+            };
         }
-    }, 
-    
-    wsdl: fs.readFileSync(path.resolve(__dirname, "../resources/xml/RuleBase.wsdl"), 'utf8') // or xml (both options are valid)
-}));
+      }
+    }
+};
 
-app.listen(8001, () => {console.log('Lytter paa 8001')})
+const fs = require('fs');
+const path = require('path');
+const express = require('express');
+const soap = require('soap');
+const bodyParser = require('body-parser');
+const xml = fs.readFileSync(path.resolve(__dirname, "../resources/xml/RuleBase.wsdl"), 'utf8')
+
+//express server example
+let app = express();
+//body parser middleware are supported (optional)
+app.use(bodyParser.raw({type: function(){return true;}, limit: '5mb'}));
+app.listen(8001, function(){
+    //Note: /wsdl route will be handled by soap module
+    //and all other routes & middleware will continue to work
+    soap.listen(app, '/wsdl', myService, xml);
+});
