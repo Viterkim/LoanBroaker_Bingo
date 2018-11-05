@@ -6,4 +6,4 @@ const port = 3000;
 
 app.use('/', api);
 
-app.listen(port, () => console.log(`0RuleBase listening on ${port}!`))
+app.listen(port, () => console.log(`0RuleBase listening on ${port}!`));

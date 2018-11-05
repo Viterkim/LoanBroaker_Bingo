@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { getFromRabbit } from "../rabbitmq/rabbitWorker";
-import { loanObject } from "../../types/CreditTypes";
+import { LoanObject } from "../../types/CreditTypes";
 const soapRequest = require('easy-soap-request');
 const xml2js = require('xml2js');
 
@@ -8,7 +8,7 @@ export function watchRabbit() {
     console.log(`Running 2GetBanks`);
     setInterval(() => {
         getFromRabbit('CreditService').then((result: string) => {
-            const loanObject: loanObject = JSON.parse(result);
+            const loanObject: LoanObject = JSON.parse(result);
             if (!loanObject.creditScore) {
                 console.log(`Received request for SSN: ${loanObject.ssn} without creditScore. Discarding request.`);
                 return;
@@ -22,11 +22,10 @@ export function watchRabbit() {
     }, 100);
 }
 
-//TODO: Replace <any> with speicifed type when we find out what type it should actually be
-export function getRuleBaseFromService(creditScore: number): Promise<any> {
+//TODO: Replace <any> with specified type when we find out what type it should actually be
+export function getRuleBaseFromService(creditScore: number, url: string = 'localhost:3000'): Promise<any> {
     return new Promise((resolve, reject) => {
         // example data
-        const url = 'http://datdb.cphbusiness.dk:8080/CreditScoreService/CreditScoreService';
         const headers = {
             'Content-Type': 'text/xml;charset=UTF-8'
         };
@@ -42,6 +41,7 @@ export function getRuleBaseFromService(creditScore: number): Promise<any> {
                 return;
             }
             const result = await parseXML(body);
+            //TODO: Fix return type, and add parser for SOAP web service (getValueFromResponse) function
             resolve({
                 creditScore: getValueFromResponse(result),
                 ssn: ssn

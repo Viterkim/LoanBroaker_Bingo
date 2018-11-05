@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { creditScore, creditScoreResponse } from '../../types/CreditTypes';
+import { CreditScoreResponse, CreditScore } from '../../types/CreditTypes';
 const xml2js = require('xml2js');
 const soapRequest = require('easy-soap-request');
 
@@ -7,11 +7,11 @@ function isValidSSN(ssn: string) {
     return ssn.match(/\d{6}-\d{4}/);
 }
 
-export function getValueFromResponse(response: creditScoreResponse): number {
+export function getValueFromResponse(response: CreditScoreResponse): number {
     return parseInt(response["S:Envelope"]["S:Body"]["0"]["ns2:creditScoreResponse"]["0"].return["0"]);
 }
 
-export function getCreditScoreFromService(ssn: string = '858585-8585'): Promise<creditScore> {
+export function getCreditScoreFromService(ssn: string = '858585-8585'): Promise<CreditScore> {
     return new Promise((resolve, reject) => {
         if (!isValidSSN(ssn)) {
             reject('Invalid ssn');
@@ -49,12 +49,11 @@ export function getCreditScoreFromService(ssn: string = '858585-8585'): Promise<
             }
         })();
     })
-    
 }
 
-export function parseXML(body: any): Promise<creditScoreResponse> {
+export function parseXML(body: any): Promise<CreditScoreResponse> {
     return new Promise((resolve, reject) => {
-        xml2js.parseString(body, (err: Error, result: creditScoreResponse) => {
+        xml2js.parseString(body, (err: Error, result: CreditScoreResponse) => {
             if (err) {
                 reject(err);
                 return;

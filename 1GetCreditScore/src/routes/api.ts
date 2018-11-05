@@ -2,17 +2,11 @@ import bodyParser from 'body-parser';
 import { Request, Response, Router } from 'express'
 import { getCreditScoreFromService } from '../controllers/soap/soapHandler';
 import { sendToRabbit } from '../controllers/rabbitmq/rabbitPublisher';
-import { loanObject } from '../types/CreditTypes';
+import { LoanObject } from '../types/CreditTypes';
 
 const router: Router = Router();
 
 router.use(bodyParser.json());
-
-router.get('/', (req, res) => {
-    res.json({
-        message: "Hello from ROOT get"
-    })
-})
 
 router.post('/', (req, res) => {
     const loanObject = correctBody(req, res);
@@ -38,7 +32,7 @@ router.post('/', (req, res) => {
     }
 })
 
-function correctBody(req: Request, res: Response): loanObject | undefined {
+function correctBody(req: Request, res: Response): LoanObject | undefined {
     const body = req.body;
     if (!body) {
         res.status(400);

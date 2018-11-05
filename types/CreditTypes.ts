@@ -3,7 +3,7 @@
  * It might look bad, but try parsing the return result from this manually:
  * {"S:Envelope":{"$":{"xmlns:S":"http://schemas.xmlsoap.org/soap/envelope/"},"S:Body":[{"ns2:creditScoreResponse":[{"$":{"xmlns:ns2":"http://service.web.credit.bank.org/"},"return":["228"]}]}]}}
  */
-export interface creditScoreResponse {
+export interface CreditScoreResponse {
     'S:Envelope': {
         '$': {
             'xmlns:S': string;
@@ -22,12 +22,12 @@ export interface creditScoreResponse {
     };
 }
 
-export interface creditScore {
+export interface CreditScore {
     ssn: string;
     creditScore: number;
 }
 
-export interface loanObject {
+export interface LoanObject {
     ssn: string;
     loanAmount: number;
     loanDuration: number;

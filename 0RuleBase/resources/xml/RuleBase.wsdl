@@ -5,7 +5,7 @@
     </types>
 
     <message name="getRuleRequest">
-        <part name="creditScore" type="xs:int"/>
+        <part name="" type="xs:int"/>
     </message>
 
 </definitions>
