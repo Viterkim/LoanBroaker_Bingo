@@ -5,14 +5,18 @@
   "main": "dist/app.js",
   "scripts": {
     "dev": "nodemon dist/app.js",
-    "test": "jest"
+    "test": "jest",
+    "typesW": "DEL /Q /F /S \"./src/types\" 2>nul && echo d 2>nul | xcopy \"../types\" \"./src/types\" /E 2>nul",
+    "typesL": "rm -rf src/types && cp -a ../types/. src/types"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@types/express": "4.16.0",
     "@types/node": "10.12.2",
+    "@types/mysql": "2.15.5",
     "express": "^4.16.4",
+    "mysql": "^2.16.0",
     "soap": "0.25.0"
   }
 }

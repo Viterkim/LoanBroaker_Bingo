@@ -1,21 +1,24 @@
-const myService = {
-    RuleBaseService: {
-        RuleBasePort: {
-        RuleBaseOperation: function (args: any) {
-            return {
-                bankListJSON: args.rating.$value
-            };
-        }
-      }
-    }
-};
-
 const fs = require('fs');
 const path = require('path');
 const express = require('express');
 const soap = require('soap');
 const bodyParser = require('body-parser');
 const xml = fs.readFileSync(path.resolve(__dirname, "../resources/xml/RuleBase.wsdl"), 'utf8')
+import { getBanksFromRating } from './controllers/mysql/queries';
+
+const myService = {
+    RuleBaseService: {
+        RuleBasePort: {
+        RuleBaseOperation: function (args: any) {
+            getBanksFromRating(args.rating.$value).then((banksArr) => {
+                return {
+                    bankListJSON: JSON.stringify(banksArr)
+                };
+            });
+        }
+      }
+    }
+};
 
 //express server example
 let app = express();

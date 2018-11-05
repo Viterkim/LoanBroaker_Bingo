@@ -1,10 +1,6 @@
-
-interface Bank {
-    bankID: number;
-    minimumScore: number;
-}
-
-interface RuleRequest {
-    bankCount: number;
-    maxRating: number;
+export default interface Bank {
+    id: number;
+    name: string;
+    minRating: number;
+    url: string;
 }
