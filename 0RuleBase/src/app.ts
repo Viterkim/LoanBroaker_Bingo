@@ -11,20 +11,19 @@ import { getBanksFromRating } from './controllers/mysql/queries';
 const myService = {
     RuleBaseService: {
         RuleBasePort: {
-        RuleBaseOperation: function (args: any) {
+        RuleBaseOperation: function (args: any, callback: (results: object) => void) {
             getBanksFromRating(args.rating.$value).then((banksArr) => {
                 console.log('Start of getBanks');
-                return {
+                callback({
                     bankListJSON: JSON.stringify(banksArr)
-                };
+                });
+                return;
             }).catch((err) => {
-                return {
-                    bankListJSON: "-1"
-                }
+                callback({
+                    error: JSON.stringify(err)
+                });
+                return;
             });
-            return {
-                bankListJSON: 'default'
-            }
         }
       }
     }
