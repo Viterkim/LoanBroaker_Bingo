@@ -1,9 +1,23 @@
+import { soap } from 'express-soap';
 import express from 'express';
-import { api } from './routes/api';
-
+import fs from 'fs';
 const app = express();
-const port = 3000;
+const path = require("path");
+ 
+app.use('/soap/rulebase', soap({
+    services: {
+        RuleBaseService: {
+            RuleBase: {
+                RuleBaseOperation({rating} : any, res: any) {
+                    res({
+                        result: "skyyyyt" + rating
+                    });
+                }
+              }
+        }
+    }, 
+    
+    wsdl: fs.readFileSync(path.resolve(__dirname, "../resources/xml/RuleBase.wsdl"), 'utf8') // or xml (both options are valid)
+}));
 
-app.use('/', api);
-
-app.listen(port, () => console.log(`0RuleBase listening on ${port}!`));
+app.listen(8001, () => {console.log('Lytter paa 8001')})
