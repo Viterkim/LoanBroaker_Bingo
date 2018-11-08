@@ -1,8 +1,13 @@
 import fs from 'fs';
 import { getFromRabbit } from "../rabbitmq/rabbitWorker";
 import { LoanObject } from "../../types/CreditTypes";
+import { RuleBaseResponse, Bank } from '../../types/BankTypes';
 const soapRequest = require('easy-soap-request');
 const xml2js = require('xml2js');
+
+export function getValueFromResponse(response: RuleBaseResponse): Array<Bank> {
+    return JSON.parse(response["soap:Envelope"]["soap:Body"][0]["tns:RuleBaseOperationResponse"][0]["tns:bankListJSON"][0]);
+}
 
 export function watchRabbit() {
     console.log(`Running 2GetBanks`);
@@ -18,12 +23,12 @@ export function watchRabbit() {
             console.log(result);
         }).catch((err) => {
             console.log(err);
-        })   
+        })
     }, 100);
 }
 
 //TODO: Replace <any> with specified type when we find out what type it should actually be
-export function getRuleBaseFromService(creditScore: number, url: string = 'localhost:3000'): Promise<any> {
+export function getRuleBaseFromService(creditScore: number, url: string = 'localhost:3000'): Promise<Array<Bank>> {
     return new Promise((resolve, reject) => {
         // example data
         const headers = {
@@ -41,14 +46,10 @@ export function getRuleBaseFromService(creditScore: number, url: string = 'local
                 return;
             }
             const result = await parseXML(body);
-            //TODO: Fix return type, and add parser for SOAP web service (getValueFromResponse) function
-            resolve({
-                creditScore: getValueFromResponse(result),
-                ssn: ssn
-            });
+            resolve(result);
         })();
     })
-    
+
 }
 
 function replaceRegex(text: string, replace: string) {
@@ -57,14 +58,14 @@ function replaceRegex(text: string, replace: string) {
 }
 
 //TODO: Replace <any> type with specified Type
-export function parseXML(body: any): Promise<any> {
+export function parseXML(body: any): Promise<Array<Bank>> {
     return new Promise((resolve, reject) => {
-        xml2js.parseString(body, (err: Error, result: any) => {
+        xml2js.parseString(body, (err: Error, result: RuleBaseResponse) => {
             if (err) {
                 reject(err);
                 return;
             }
-            resolve(result);
+            resolve(getValueFromResponse(result));
         });
     })
 }
