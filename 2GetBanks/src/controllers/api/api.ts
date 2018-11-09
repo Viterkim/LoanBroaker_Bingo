@@ -18,8 +18,7 @@ export function watchRabbit() {
                 console.log(`Received request for SSN: ${loanObject.ssn} without creditScore. Discarding request.`);
                 return;
             }
-            getRuleBaseFromService(loanObject.creditScore);
-
+            getRuleBaseFromService(loanObject.creditScore, loanObject.loanAmount, loanObject.loanDuration);
             console.log(result);
         }).catch((err) => {
             console.log(err);
@@ -28,14 +27,14 @@ export function watchRabbit() {
 }
 
 //TODO: Replace <any> with specified type when we find out what type it should actually be
-export function getRuleBaseFromService(creditScore: number, url: string = 'localhost:3000'): Promise<Array<Bank>> {
+export function getRuleBaseFromService(creditScore: number, loanAmount: number, loanDuration: number, url: string = 'localhost:3000'): Promise<Array<Bank>> {
     return new Promise((resolve, reject) => {
         // example data
         const headers = {
             'Content-Type': 'text/xml;charset=UTF-8'
         };
 
-        const xml = replaceRegex(fs.readFileSync('./resources/xml/RequestRuleBase.xml', 'utf-8'), `${creditScore}`);
+        let xml = replaceXMLData(fs.readFileSync('./resources/xml/RequestRuleBase.xml', 'utf-8'), creditScore, loanAmount, loanDuration);
 
         // usage of module
         (async () => {
@@ -52,9 +51,16 @@ export function getRuleBaseFromService(creditScore: number, url: string = 'local
 
 }
 
-function replaceRegex(text: string, replace: string) {
-    const REGEX_REPLACE = /({\?\?\?})/;
-    return text.replace(REGEX_REPLACE, replace);
+function replaceXMLData(xml: string, creditScore: number, loanAmount: number, loanDuration: number): string {
+    const dataArr = [creditScore, loanAmount, loanDuration];
+    for (let i = 0; i < 3; i++) {
+        xml = replaceFirst(xml, `{???}`, `${dataArr[i]}`);
+    }
+    return xml;
+}
+
+export function replaceFirst(text: string, search: string, replace: string) {
+    return text.replace(search, replace);
 }
 
 //TODO: Replace <any> type with specified Type

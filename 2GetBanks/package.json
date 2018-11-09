@@ -19,5 +19,8 @@
     "easy-soap-request": "^2.3.0",
     "jest": "^23.6.0",
     "xml2js": "^0.4.19"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }

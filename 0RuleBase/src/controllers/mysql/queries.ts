@@ -1,19 +1,16 @@
 import mysql, { Connection } from 'mysql';
 import connection from './connection';
-//@ts-ignore
-import Bank from '../../types/BankTypes';
+import { Bank } from '../../types/BankTypes';
 
-
-export function getBanksFromRating(rating: number) {
-  return new Promise((resolve, reject) => {
-    connection.query('SELECT * from bank WHERE minRating <= ?',
-      [rating],
-      (error: any, results: Array<Bank>, fields: any) => {
-        if(error){
-          reject(error);
-        }
-        console.log(results);
-        resolve(results);
+export function getBanks(rating: number, amount: number, duration: number): Promise<Array<Bank>> {
+    return new Promise((resolve, reject) => {
+        connection.query('SELECT * from bank WHERE minRating <= ? AND minAmount <= ? AND maxAmount >= ? AND minDuration <= ? AND maxDuration >= ?',
+            [rating, amount, amount, duration, duration],
+            (error: any, results: Array<Bank>, fields: any) => {
+                if (error) {
+                    reject(error);
+                }
+                resolve(results);
+            });
     });
-  });
 }

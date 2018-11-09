@@ -2,6 +2,8 @@
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.examples.com/wsdl/RuleBaseService.wsdl" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="RuleBaseService" targetNamespace="http://www.examples.com/wsdl/RuleBaseService.wsdl">
    <message name="RuleBaseRequest">
       <part name="rating" type="xsd:integer" />
+      <part name="loanAmount" type="xsd:integer" />
+      <part name="loanDuration" type="xsd:integer" />
    </message>
    <message name="RuleBaseResponse">
       <part name="bankListJSON" type="xsd:string" />
