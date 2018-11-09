@@ -1,0 +1,10 @@
+<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:examples:rulebaseservice">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:RuleBaseOperation soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+        <rating xsi:type="xsd:integer">{???}</rating>
+        <loanAmount xsi:type="xsd:integer">{???}</loanAmount>
+        <loanDuration xsi:type="xsd:integer">{???}</loanDuration>
+      </urn:RuleBaseOperation>
+   </soapenv:Body>
+</soapenv:Envelope>
