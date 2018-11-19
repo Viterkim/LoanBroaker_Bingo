@@ -20,11 +20,7 @@ export default class XMLTranslator {
         const loanDateStr = JSON.stringify(new Date(baseDate.setMonth(baseDate.getMonth() + loanObject.loanDuration)));
         const loanDateArr = loanDateStr.split("T");
         const loanTime = loanDateArr[1].split("Z");
-        const uuid = this.bankRequest.uuid;
-        const parts = this.bankRequest.totalParts;
-        const bankDate = `${loanDateArr[0]} ${loanTime[0].replace(".000", ".0")} CET`;
-        const TEST_DATE = "1970-02-01 00:00:00.0 CET"
-        return replaceXMLData(LoanRequest,`${loanObject.ssn}`, loanObject.creditScore, loanObject.loanAmount, TEST_DATE);
+        return replaceXMLData(LoanRequest, loanObject.ssn, loanObject.creditScore, loanObject.loanAmount, `${loanDateArr[0]} ${loanTime[0].replace(".000", ".0")} CET`);
     }
 
 }
