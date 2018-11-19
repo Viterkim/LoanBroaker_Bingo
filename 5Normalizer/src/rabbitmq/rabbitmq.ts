@@ -70,8 +70,7 @@ export function sendToBank(queueName: string, message: string){
                 }
                 console.log(`[rabbitPublisher.sendToRabbit] Sending to ${queueName} the data: ${message}`)
                 ch.assertQueue(queueName, { durable: false });
-                //ch.sendToQueue(queueName, Buffer.from(message), { 'reply-to': "bingoboisReply" });
-                ch.publish(queueName, '', Buffer.from(message), { replyTo: "bingoboisReply" });
+                ch.sendToQueue(queueName, Buffer.from(message));
                 resolve(true);
             });
         });
@@ -98,6 +97,7 @@ export function getFromBank(queueName: string): Promise<string> {
                 ch.consume(queueName, (message: rabbitMessage) => {
                     //TODO: Update rabbitMessage to actual object, content might be a buffer
                     resolve(message.content.toString('utf8'));
+                    console.log(message.content.toString('utf8'))
                     ch.ack(message);
                 }, {noAck: false});
             });

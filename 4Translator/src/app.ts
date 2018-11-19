@@ -45,8 +45,6 @@ getFromRabbit(`Bank ${process.argv[2]} Queue`).then(result => {
         
     }
 });
-/*
-For testing purposes, to test the different parsers
 const tempBankRequest: BankRequest = {
     bank: {
         id: 3,
@@ -58,7 +56,7 @@ const tempBankRequest: BankRequest = {
         creditScore: 200,
         loanAmount: 20000,
         loanDuration: 1,
-        ssn: "858585-8585"
+        ssn: "8585858585"
     },
     totalParts: 3,
     uuid: "bingobango"
@@ -67,4 +65,3 @@ const tempBankRequest: BankRequest = {
 sendToRabbit(JSON.stringify(tempBankRequest), `Bank ${process.argv[2]} Queue`).then(result => {
     
 })
-*/
