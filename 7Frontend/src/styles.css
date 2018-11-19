@@ -1,0 +1,23 @@
+input.first6 {
+    width: 47px;
+}
+
+input.last4 {
+    width: 32px;
+}
+
+button.ResetButton {
+    margin-left: 20px;
+}
+
+.container {
+    margin: 20px;
+}
+
+input.duration {
+    width: 24px;
+}
+
+input.amount {
+    width: 40px;
+}

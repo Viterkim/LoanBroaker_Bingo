@@ -1,0 +1,32 @@
+{
+  "name": "loanbroker",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@types/react": "^16.7.6",
+    "@types/socket.io-client": "^1.4.32",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "socket.io-client": "^2.1.1",
+    "typescript": "^3.1.6"
+  },
+  "devDependencies": {
+    "react-scripts": "2.1.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "typesW": "DEL /Q /F /S \"./src/types\" 2>nul && echo d 2>nul | xcopy \"../types\" \"./src/types\" /E 2>nul"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
