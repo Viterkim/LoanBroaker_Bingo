@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: 5normalizer
+spec:
+  replicas: 2
+  minReadySeconds: 15
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: 5normalizer
+    spec:
+     containers:
+       - image: dolphinnews/5normalizer:123412
+         imagePullPolicy: Always
+         name: 5normalizer

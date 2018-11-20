@@ -7,7 +7,8 @@
     "test": "jest",
     "start": "node dist/app",
     "dev": "nodemon dist/app",
-    "typesW": "DEL /Q /F /S \"./src/types\" 2>nul && echo d 2>nul | xcopy \"../types\" \"./src/types\" /E 2>nul"
+    "typesW": "DEL /Q /F /S \"./src/types\" 2>nul && echo d 2>nul | xcopy \"../types\" \"./src/types\" /E 2>nul",
+    "typesL": "rm -rf src/types && cp -a ../types/. src/types"
   },
   "keywords": [],
   "author": "",

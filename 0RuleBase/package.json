@@ -4,6 +4,7 @@
   "description": "",
   "main": "dist/app.js",
   "scripts": {
+    "start": "node dist/app.js",
     "dev": "nodemon dist/app.js",
     "test": "jest",
     "typesW": "DEL /Q /F /S \"./src/types\" 2>nul && echo d 2>nul | xcopy \"../types\" \"./src/types\" /E 2>nul",
