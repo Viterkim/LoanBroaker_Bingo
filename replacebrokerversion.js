@@ -1,5 +1,3 @@
-//dfie93
-
 let inputValue = process.argv[2];
 
 let fs = require('fs');

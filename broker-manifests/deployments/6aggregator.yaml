@@ -19,3 +19,5 @@ spec:
        - image: dolphinnews/6aggregator:jojojo
          imagePullPolicy: Always
          name: 6aggregator
+         ports:
+           - containerPort: 8081
