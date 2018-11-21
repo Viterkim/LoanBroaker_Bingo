@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: 4translator
+  name: 7frontend
 spec:
   replicas: 2
   minReadySeconds: 15
@@ -13,9 +13,11 @@ spec:
   template:
     metadata:
       labels:
-        app: 4translator
+        app: 7frontend
     spec:
      containers:
-       - image: dolphinnews/4translator:123412
+       - image: dolphinnews/7frontend:jojojo
          imagePullPolicy: Always
-         name: 4translator
+         name: 7frontend
+         ports:
+           - containerPort: 80

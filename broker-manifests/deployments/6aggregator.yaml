@@ -16,6 +16,6 @@ spec:
         app: 6aggregator
     spec:
      containers:
-       - image: dolphinnews/6aggregator:123412
+       - image: dolphinnews/6aggregator:jojojo
          imagePullPolicy: Always
          name: 6aggregator

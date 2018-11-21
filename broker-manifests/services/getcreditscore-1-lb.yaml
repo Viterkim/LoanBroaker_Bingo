@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: 1getcreditscore-lb
+  name: getcreditscore-1-lb
 spec:
   type: LoadBalancer
   ports:
