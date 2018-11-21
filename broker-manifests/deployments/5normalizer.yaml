@@ -16,6 +16,6 @@ spec:
         app: 5normalizer
     spec:
      containers:
-       - image: dolphinnews/5normalizer:dfie93
+       - image: dolphinnews/5normalizer:jojojo
          imagePullPolicy: Always
          name: 5normalizer

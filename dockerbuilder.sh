@@ -16,12 +16,23 @@ for d in */ ; do
   fi
   
   # Normalizer (Multiple different ones)
-  if [ $d = "5Normalizer/" ]; then
-    echo Building normalizer setup for "$TMP_DOCKER"
+  if [ $d = "4Translator/" ]; then
+    echo Building translator setup for "$TMP_DOCKER"
+    cd $d
+    TMP_DOCKER=(dolphinnews/$newD-3:$1)
+    cp docker/3/Dockerfile .
+    docker build -t $TMP_DOCKER .
+    docker push $TMP_DOCKER
+    rm Dockerfile
+    
+    cp docker/4/Dockerfile .
+    TMP_DOCKER=(dolphinnews/$newD-4:$1)
+    docker build -t $TMP_DOCKER .
+    docker push $TMP_DOCKER
+    rm Dockerfile
+	
+    cd ..
   fi
-
-  #cd $d
-  #cd ..
 done
 
 fi

@@ -1,6 +1,6 @@
 //dfie93
 
-let inputValue = 'dfie93';
+let inputValue = process.argv[2];
 
 let fs = require('fs');
 let files = fs.readdirSync(__dirname+'/broker-manifests/deployments'); 

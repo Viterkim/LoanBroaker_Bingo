@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: 3reciplist
+  name: 4translator-4
 spec:
   replicas: 2
   minReadySeconds: 15
@@ -13,9 +13,9 @@ spec:
   template:
     metadata:
       labels:
-        app: 3reciplist
+        app: 4translator-4
     spec:
      containers:
-       - image: dolphinnews/3reciplist:jojojo
+       - image: dolphinnews/4translator-4:jojojo
          imagePullPolicy: Always
-         name: 3reciplist
+         name: 4translator-4
