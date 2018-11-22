@@ -5,8 +5,8 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - port: 3003
+  - port: 9006
     protocol: TCP
-    targetPort: 8081
+    targetPort: 9006
   selector:
     app: 6aggregator
