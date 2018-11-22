@@ -3,7 +3,7 @@ import { api } from './routes/api';
 import bodyParser from 'body-parser';
 
 const app = express();
-const port = 3002;
+const port = 3001;
 
 app.use(bodyParser.json())
 
