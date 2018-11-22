@@ -9,42 +9,31 @@ export function getValueFromResponse(response: RuleBaseResponse): Array<Bank> {
     return JSON.parse(response["soap:Envelope"]["soap:Body"][0]["tns:RuleBaseOperationResponse"][0]["tns:bankListJSON"][0]);
 }
 
-export function watchRabbit() {
-    console.log(`Running 2GetBanks`);
-    setInterval(() => {
-        getFromRabbit('CreditService').then((result: string) => {
-            const loanObject: LoanObject = JSON.parse(result);
-            if (!loanObject.creditScore) {
-                console.log(`Received request for SSN: ${loanObject.ssn} without creditScore. Discarding request.`);
-                return;
-            }
-            getRuleBaseFromService(loanObject.creditScore, loanObject.loanAmount, loanObject.loanDuration);
-            console.log(result);
-        }).catch((err) => {
-            console.log(err);
-        })
-    }, 100);
-}
-
 //TODO: Replace <any> with specified type when we find out what type it should actually be
-export function getRuleBaseFromService(creditScore: number, loanAmount: number, loanDuration: number, url: string = 'localhost:3000'): Promise<Array<Bank>> {
+export function getRuleBaseFromService(creditScore: number, loanAmount: number, loanDuration: number, url: string = 'localhost:8001/'): Promise<Array<Bank>> {
+    console.log("Getting from rulebase")
     return new Promise((resolve, reject) => {
         // example data
         const headers = {
             'Content-Type': 'text/xml;charset=UTF-8'
         };
-
         let xml = replaceXMLData(fs.readFileSync('./resources/xml/RequestRuleBase.xml', 'utf-8'), creditScore, loanAmount, loanDuration);
-
         // usage of module
         (async () => {
-            const { response } = await soapRequest(url, headers, xml);
-            const { body, statusCode } = response;
+            
+            const soap = await soapRequest('http://dolphin.viter.dk:8001/wsdl?wsdl', headers, xml).catch((e:any) => console.log(e));
+            console.log(soap);
+            console.log("READING SOAP REQUESTS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+            console.log(soap.response);
+            const { body, statusCode } = soap.response;
             if (statusCode !== 200) {
                 reject(`Server returned status code: ${statusCode}`);
                 return;
             }
+            console.log(body);
             const result = await parseXML(body);
+            console.log(result);
+
             resolve(result);
         })();
     })

@@ -2,7 +2,6 @@ import { getFromRabbit, sendToRabbit } from "./controllers/rabbitmq/rabbitWorker
 import { RecipientRequest, BankRequest } from "./types/RecipientTypes";
 import uuid from 'uuid-by-string';
 
-setInterval(() => {
     getFromRabbit('RecipientQueue').then((result: string) => {
         const recipientObject: RecipientRequest = JSON.parse(result);
         //Send a message to each bank
@@ -20,4 +19,3 @@ setInterval(() => {
             });
         }
     })
-}, 100)
