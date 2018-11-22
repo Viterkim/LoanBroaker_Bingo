@@ -8,8 +8,9 @@ import { RecipientRequest } from './types/RecipientTypes';
 //3) Send to RabbitMQ channel "BankRecipients", data: BankID, ssn, credit score, loan duration, loan amount
 
 console.log(`Running 2GetBanks`);
-setInterval(() => {
     getFromRabbit('CreditService').then((result: string) => {
+        console.log("Received");
+        console.log(result);
         const loanObject: LoanObject = JSON.parse(result);
         if (!loanObject.creditScore) {
             console.log(`Received request for SSN: ${loanObject.ssn} without creditScore. Discarding request.`);
@@ -21,10 +22,10 @@ setInterval(() => {
                 loanObject: loanObject
             }
             sendToRabbit(JSON.stringify(recipientRequestMessage), `RecipientQueue`).catch((err) => {
+                console.log("Sending");
                 console.log(err);
             })
         });
     }).catch((err) => {
         console.log(err);
     })
-}, 100);
