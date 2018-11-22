@@ -21,7 +21,7 @@ export function getRuleBaseFromService(creditScore: number, loanAmount: number, 
         // usage of module
         (async () => {
             
-            const soap = await soapRequest('http://dolphin.viter.dk:8001/wsdl?wsdl', headers, xml).catch((e:any) => console.log(e));
+            const soap = await soapRequest('http://dolphin.viter.dk:9000/wsdl?wsdl', headers, xml).catch((e:any) => console.log(e));
             console.log(soap);
             console.log("READING SOAP REQUESTS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             console.log(soap.response);

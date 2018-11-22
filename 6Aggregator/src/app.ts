@@ -7,7 +7,7 @@ import SocketManager from './SocketManager';
 //Lastly the data is then sent to the listening party, the WebSocket connection is then closed after X seconds of timeout.
 
 const manager = new SocketManager();
-const PORT = 8081;
+const PORT = 9006;
 
 const websocketServer = new ws.Server({
     port: PORT
