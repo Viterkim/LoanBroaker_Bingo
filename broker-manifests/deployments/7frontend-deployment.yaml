@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: 7frontend
+spec:
+  replicas: 2
+  minReadySeconds: 15
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: 7frontend
+    spec:
+     containers:
+       - image: dolphinnews/7frontend:jojojo
+         imagePullPolicy: Always
+         name: 7frontend
+         ports:
+           - containerPort: 80

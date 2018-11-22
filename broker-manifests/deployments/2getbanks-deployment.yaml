@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: 2getbanks
+spec:
+  replicas: 2
+  minReadySeconds: 15
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: 2getbanks
+    spec:
+     containers:
+       - image: dolphinnews/2getbanks:jojojo
+         imagePullPolicy: Always
+         name: 2getbanks
