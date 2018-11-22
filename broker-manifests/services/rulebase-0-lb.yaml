@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: rulebase-0-lb
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 9009
+    protocol: TCP
+    targetPort: 9009
+  selector:
+    app: 0rulebase
