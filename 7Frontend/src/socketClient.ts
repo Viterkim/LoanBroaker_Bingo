@@ -2,7 +2,7 @@ import openSocket from 'socket.io-client';
 
 export default class WebSocketClient {
 
-    private SERVER_URL = 'http://dolphin.viter.dk:3001/';
+    private SERVER_URL = 'http://dolphin.viter.dk:9006/';
     private ssn = '';
 
     constructor(ssn: string) {
