@@ -1,5 +1,6 @@
 import ws from 'ws';
 import { getFromRabbit } from './rabbit/rabbitmq';
+import { BankQuote } from './types/BankTypes';
 
 export default class SocketManager {
 
@@ -38,7 +39,11 @@ export default class SocketManager {
                 }).catch((err) => {
                     console.log(err);
                 });
-                socket.send(`Test Data for ssn: ${ssn}`)
+                const testData: BankQuote = {
+                    bankName: 'testBank',
+                    interest: 12.65
+                }
+                socket.send(JSON.stringify(testData));
             }, 1000);
             //@ts-ignore
             socket.subscribeID = subscribeID;
@@ -49,6 +54,8 @@ export default class SocketManager {
     public getSockets = (): Array<ws> => {
         return this.sockets;
     }
+
+
 
 }
 
