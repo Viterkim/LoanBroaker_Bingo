@@ -11,7 +11,7 @@ export default class WebSocketClient {
     }
 
     start(onMessage: (message: BankQuote) => void, onClose: (code: number, reason: string) => void) {
-        const socket = new WebSocket('ws://localhost:9006');
+        const socket = new WebSocket('ws://dolphin.viter.dk:9006');
 
         socket.onopen = (event) => {
             //console.log(event);
