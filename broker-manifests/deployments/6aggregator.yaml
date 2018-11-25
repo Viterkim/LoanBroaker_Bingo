@@ -16,8 +16,8 @@ spec:
         app: 6aggregator
     spec:
      containers:
-       - image: dolphinnews/6aggregator:jojojo
+       - image: dolphinnews/6aggregator:siej33
          imagePullPolicy: Always
          name: 6aggregator
          ports:
-           - containerPort: 8081
+           - containerPort: 9006

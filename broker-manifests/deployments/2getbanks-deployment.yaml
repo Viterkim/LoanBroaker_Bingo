@@ -16,6 +16,6 @@ spec:
         app: 2getbanks
     spec:
      containers:
-       - image: dolphinnews/2getbanks:jojojo
+       - image: dolphinnews/2getbanks:siej33
          imagePullPolicy: Always
          name: 2getbanks

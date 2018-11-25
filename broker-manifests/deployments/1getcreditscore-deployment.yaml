@@ -16,8 +16,8 @@ spec:
         app: 1getcreditscore
     spec:
      containers:
-       - image: dolphinnews/1getcreditscore:jojojo
+       - image: dolphinnews/1getcreditscore:siej33
          imagePullPolicy: Always
          name: 1getcreditscore
          ports:
-           - containerPort: 3001
+           - containerPort: 9001

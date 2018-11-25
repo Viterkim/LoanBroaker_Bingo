@@ -16,6 +16,6 @@ spec:
         app: 3reciplist
     spec:
      containers:
-       - image: dolphinnews/3reciplist:jojojo
+       - image: dolphinnews/3reciplist:siej33
          imagePullPolicy: Always
          name: 3reciplist

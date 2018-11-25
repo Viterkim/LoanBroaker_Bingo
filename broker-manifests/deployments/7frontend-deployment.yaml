@@ -16,7 +16,7 @@ spec:
         app: 7frontend
     spec:
      containers:
-       - image: dolphinnews/7frontend:jojojo
+       - image: dolphinnews/7frontend:siej33
          imagePullPolicy: Always
          name: 7frontend
          ports:

@@ -16,6 +16,6 @@ spec:
         app: 4translator-3
     spec:
      containers:
-       - image: dolphinnews/4translator-3:jojojo
+       - image: dolphinnews/4translator-3:siej33
          imagePullPolicy: Always
          name: 4translator-3
