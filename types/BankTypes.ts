@@ -23,3 +23,8 @@ export interface RuleBaseResponse {
         ]
     };
 }
+
+export interface BankQuote {
+    bankName: string;
+    interest: number;
+}

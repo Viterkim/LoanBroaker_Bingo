@@ -1,8 +1,9 @@
-import WebSocketClient from "./socketClient";
+import WebSocketClient from "./nativeSocket";
+import { BankQuote } from "./types/BankTypes";
 
-export function handleRequest(ssn: string, loanDuration: number, loanAmount: number, updateCallback: (bankQuote: any) => void) {
+export function handleRequest(ssn: string, loanDuration: number, loanAmount: number, updateCallback: (bankQuote: BankQuote) => void, closeCallback: (code: number, reason: string) => void) {
     sendRequestToBanks(ssn, loanDuration, loanAmount);
-    openWebsocket(ssn, updateCallback);
+    openWebsocket(ssn, updateCallback, closeCallback);
 }
 
 
@@ -11,7 +12,8 @@ function sendRequestToBanks(ssn: string, loanDuration: number, loanAmount: numbe
     //so that it accepts this request and can handle all the data from there.
 }
 
-export function openWebsocket(ssn: string, updateCallback: (bankQuote: any) => void) {
+export function openWebsocket(ssn: string, updateCallback: (bankQuote: BankQuote) => void, closeCallback: (code: number, reason: string) => void) {
     const client = new WebSocketClient(ssn);
-    client.start(updateCallback);
+    client.start(updateCallback, closeCallback);
+    //client.start(updateCallback);
 }

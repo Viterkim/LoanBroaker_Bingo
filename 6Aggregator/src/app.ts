@@ -13,7 +13,7 @@ const websocketServer = new ws.Server({
     port: PORT
 })
 
-websocketServer.on('connection', (socket, req) => {
+websocketServer.on('connection', (socket) => {
     manager.addSocket(socket);
 });
 

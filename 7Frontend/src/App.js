@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './styles.css';
-import { handleRequest, openWebsocket } from './api';
+import { handleRequest } from './api';
 
 class App extends Component {
 
@@ -21,7 +21,7 @@ class App extends Component {
         if (e.target.value.match(/^[0-9]+$/)) {
             if (e.target.value.length < 7) {
                 this.setState({first6: `${e.target.value}`})
-                console.log(e.target.value);
+                //console.log(e.target.value);
             } else if (e.target.value.length === 7) {
                 this.last4.focus();
                 const additional = e.target.value;
@@ -104,7 +104,7 @@ class App extends Component {
         const tableRows = this.state.tableData.map((element, index) => {
             return (
                 <tr key={index} className="container">
-                    <td>{element.bank}</td>
+                    <td>{element.bankName}</td>
                     <td>{element.interest}</td>
                 </tr>
             )
@@ -148,18 +148,28 @@ class App extends Component {
                 <div className="container">
                     <button disabled={!this.state.first6 || !this.state.last4 || !this.state.duration || !this.state.amount || this.state.timeout}
                         onClick={() => {
+                            this.setState({
+                                timeout: true,
+                                tableData: []
+                            })
+                            //console.log(`${this.state.first6}-${this.state.last4}, ${this.state.duration}, ${this.state.amount}`);
                             handleRequest(`${this.state.first6}-${this.state.last4}`, this.state.duration, this.state.amount, (bankQuote) => {
                                 const array = this.state.tableData;
                                 array.push(JSON.parse(bankQuote));
                                 this.setState({
                                     tableData: array
                                 })
+                            }, (code, reason) => {
+                                //console.log(`Connection closed, code: ${code}, reason: ${reason}`)
+                                this.setState({
+                                    timeout: false
+                                })
                             })
                         }}
                     >Request Quotes</button>
                 </div>
                 <div className="container">
-                    <table>
+                    <table cellSpacing="20px">
                         <thead>
                             <tr>
                                 <th>Bank</th>
