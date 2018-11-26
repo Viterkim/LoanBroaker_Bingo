@@ -1,14 +1,16 @@
-import bodyParser from 'body-parser';
 import { Request, Response, Router } from 'express'
 import { getCreditScoreFromService } from '../controllers/soap/soapHandler';
 import { sendToRabbit } from '../controllers/rabbitmq/rabbitPublisher';
 import { LoanObject } from '../types/CreditTypes';
+import bodyParser = require('body-parser');
 
 const router: Router = Router();
 
 router.use(bodyParser.json());
 
 router.post('/', (req, res) => {
+    console.log(`Received request!`);
+    console.log(req.body);
     const loanObject = correctBody(req, res);
     if (loanObject) {
         console.log(`Found loanObject: ${JSON.stringify(loanObject)}`);
@@ -34,6 +36,8 @@ router.post('/', (req, res) => {
 
 function correctBody(req: Request, res: Response): LoanObject | undefined {
     const body = req.body;
+    /*
+    console.log(body);
     if (!body) {
         res.status(400);
         res.json({
@@ -60,6 +64,7 @@ function correctBody(req: Request, res: Response): LoanObject | undefined {
         });
         return undefined;
     }
+    */
     return {
         ssn: req.body.ssn,
         loanAmount: req.body.loanAmount,

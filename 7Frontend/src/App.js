@@ -153,7 +153,7 @@ class App extends Component {
                                 tableData: []
                             })
                             //console.log(`${this.state.first6}-${this.state.last4}, ${this.state.duration}, ${this.state.amount}`);
-                            handleRequest(`${this.state.first6}-${this.state.last4}`, this.state.duration, this.state.amount, (bankQuote) => {
+                            handleRequest(`${this.state.first6}-${this.state.last4}`, parseInt(this.state.duration), parseInt(this.state.amount), (bankQuote) => {
                                 const array = this.state.tableData;
                                 array.push(JSON.parse(bankQuote));
                                 this.setState({

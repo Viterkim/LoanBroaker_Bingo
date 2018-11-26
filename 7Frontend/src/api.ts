@@ -12,7 +12,8 @@ export function handleRequest(ssn: string, loanDuration: number, loanAmount: num
 function sendRequestToBanks(ssn: string, loanDuration: number, loanAmount: number) {
     //TODO: POST request, with the ssn, duration and amount in body, and change the 1Get... project, 
     //so that it accepts this request and can handle all the data from there.
-    const SERVER_URL = "dolphin.viter.dk:9001";
+    const SERVER_URL = "http://dolphin.viter.dk:9001";
+
 
     const loanObject: LoanObject = {
         ssn: ssn,
@@ -22,7 +23,10 @@ function sendRequestToBanks(ssn: string, loanDuration: number, loanAmount: numbe
 
     const options: RequestInit = {
         method: "POST",
-        body: JSON.stringify(loanObject)
+        body: JSON.stringify(loanObject),
+        headers: {
+            "Content-Type": "application/json"
+        }
     }
 
     fetch(SERVER_URL, options).then((result) => {
