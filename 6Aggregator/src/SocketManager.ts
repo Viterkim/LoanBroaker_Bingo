@@ -39,11 +39,15 @@ export default class SocketManager {
                 }).catch((err) => {
                     console.log(err);
                 });
+
+                /* This is for testing, uncomment if doing localhost setup
+
                 const testData: BankQuote = {
                     bankName: 'testBank',
                     interest: 12.65
                 }
                 socket.send(JSON.stringify(testData));
+                */
             }, 1000);
             //@ts-ignore
             socket.subscribeID = subscribeID;
