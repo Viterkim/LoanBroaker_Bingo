@@ -19,7 +19,7 @@ export function getFromRabbit(queueName: string): Promise<string> {
                 }
                 ch.assertQueue(queueName, { durable: false });
                 ch.prefetch(1);
-                console.log(`Waiting for data from ${queueName}`);
+                //console.log(`Waiting for data from ${queueName}`);
                 ch.consume(queueName, (message: rabbitMessage) => {
                     //TODO: Update rabbitMessage to actual object, content might be a buffer
                     resolve(message.content.toString('utf8'));
@@ -91,7 +91,7 @@ export function getFromBank(queueName: string): Promise<string> {
                 }
                 ch.assertQueue(queueName, { durable: false });
                 ch.prefetch(1);
-                console.log(`Waiting for data from ${queueName}`);
+                //console.log(`Waiting for data from ${queueName}`);
                 ch.consume(queueName, (message: rabbitMessage) => {
                     //TODO: Update rabbitMessage to actual object, content might be a buffer
                     resolve(message.content.toString('utf8'));
