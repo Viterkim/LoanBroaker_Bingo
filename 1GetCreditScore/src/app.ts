@@ -5,15 +5,8 @@ import cors from 'cors';
 const app = express();
 const port = 9001;
 
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 app.use(cors());
-app.post('/test', (req, res) => {
-    console.log(`Replicating req.body`);
-    console.log(req.body);
-    res.json({
-        body: req.body
-    });
-})
 
 app.use('/', api);
 
