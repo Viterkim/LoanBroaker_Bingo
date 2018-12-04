@@ -6,7 +6,7 @@ console.log(files);
 
 // for every file
 files.forEach(e => {
-  regexReplace(`${__dirname}/broker-manifests/deployments/${e}`, /(- image: [\S]*:)(\S*)/, inputValue);
+  regexReplace(`${__dirname}/broker-manifests/deployments/${e}.yaml`, /(- image: [\S]*:)(\S*)/, inputValue);
 });
 
 
