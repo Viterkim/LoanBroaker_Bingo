@@ -11,7 +11,7 @@ export default class XMLTranslator {
         this.bankRequest = bankRequest;
     }
 
-    getParsedXML(): string{
+    /* getParsedXML(): string{
         const loanObject = this.bankRequest.loanObject;
         if(!loanObject.creditScore){
             throw Error("No CreditScore Given")
@@ -25,6 +25,6 @@ export default class XMLTranslator {
         const bankDate = `${loanDateArr[0]} ${loanTime[0].replace(".000", ".0")} CET`;
         const TEST_DATE = "1970-02-01 00:00:00.0 CET"
         return replaceXMLData(LoanRequest,`${loanObject.ssn}`, loanObject.creditScore, loanObject.loanAmount, TEST_DATE);
-    }
+    } */
 
 }
