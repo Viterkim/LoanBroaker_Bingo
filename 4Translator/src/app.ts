@@ -9,15 +9,19 @@ import { BankRequest } from './types/RecipientTypes';
         switch(parseInt(process.argv[2])){
             case 1:
                 const jsonRequest1 = formatJson(result);
-                sendToRabbit(JSON.stringify(jsonRequest1), "viktobanken").then(r => {
-                    console.log("sent off to viktobanken");
-                })
+                if(jsonRequest1 !== null || jsonRequest1 !== undefined){
+                    sendToRabbit(JSON.stringify(jsonRequest1), "viktobanken").then(r => {
+                        console.log("sent off to viktobanken");
+                    })
+                }
             break;
             case 2:
                 const jsonRequest2 = formatJson(result);
+                if(jsonRequest2 !== null || jsonRequest2 !== undefined){
                 sendToRabbit(JSON.stringify(jsonRequest2), "javabanken").then(r => {
                     console.log("sent off to viktobanken");
                 })
+            }
             break;
             case 3:
                 const xmlRequest = new XMLTranslator(JSON.parse(result)).getParsedXML();
