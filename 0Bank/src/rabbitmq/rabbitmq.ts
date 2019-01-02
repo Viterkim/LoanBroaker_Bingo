@@ -12,21 +12,21 @@ interface BankRequest{
 
 export function sendToRabbit(
     message: string,
-    queueName: string
-): Promise<boolean> {
-    return new Promise((resolve, reject) => {
+    queueName: string,
+    callback: (result: boolean, err: string | null) => void
+){
         const connectURL = "amqp://dbdolphin.viter.dk:5672";
         amqp.connect(
             connectURL,
             function(err: Error, conn: any) {
                 if (err) {
-                    reject(err);
+                    callback(false, err.message);
                     return;
                 }
                 conn.createChannel(function(err: Error, ch: any) {
                     if (err) {
                         console.log(err);
-                        reject(err);
+                        callback(false, err.message);
                         return;
                     }
                     console.log(
@@ -34,26 +34,24 @@ export function sendToRabbit(
                     );
                     ch.assertQueue(queueName, { durable: false });
                     ch.sendToQueue(queueName, Buffer.from(message));
-                    resolve(true);
+                    callback(true, null);
                 });
             }
         );
-    });
 }
 
-export function sendToBank(queueName: string, message: string) {
-    return new Promise((resolve, reject) => {
+export function sendToBank(queueName: string, message: string, callback: (result: boolean, err: string | null) => void) {
         amqp.connect(
             "amqp://datdb.cphbusiness.dk:5672",
             function(err: Error, conn: any) {
                 if (err) {
-                    reject(err);
+                    callback(false, err.message);
                     return;
                 }
                 conn.createChannel(function(err: Error, ch: any) {
                     if (err) {
                         console.log(err);
-                        reject(err);
+                        callback(false, err.message);
                         return;
                     }
                     console.log(
@@ -64,54 +62,47 @@ export function sendToBank(queueName: string, message: string) {
                     ch.publish(queueName, "", Buffer.from(message), {
                         replyTo: "bingoboisReply"
                     });
-                    resolve(true);
+                    callback(true, null)
                 });
             }
         );
-    });
 }
-export function getFromBank(queueName: string): Promise<string> {
-    return new Promise((resolve, reject) => {
+export function getFromBank(queueName: string, callback: (result: boolean | string, err: string | null) => void) {
         const connectURL = "amqp://datdb.cphbusiness.dk:5672";
         amqp.connect(connectURL, function (err: Error, conn: any) {
             if (err) {
-                reject(err);
+                callback(false, err.message);
             }
             conn.createChannel(function (err: Error, ch: any) {
                 if (err) {
                     console.log(err);
-                    reject(err);
+                    callback(false, err.message);
                     return;
                 }
-                setInterval(() => {
                     ch.assertQueue(queueName, { durable: false });
                     ch.prefetch(1);
                     console.log(`Waiting for data from ${queueName}`);
                     ch.consume(queueName, (message: rabbitMessage) => {
                         //TODO: Update rabbitMessage to actual object, content might be a buffer
-                        resolve(message.content.toString('utf8'));
+                        callback(message.content.toString('utf8'), null)
                         ch.ack(message);
                     }, {noAck: false});
-                }, 100)
-               
             });
         })
-    })
 }
 
-export function sendToBingoBank(queueName: string, message: string) {
-    return new Promise((resolve, reject) => {
+export function sendToBingoBank(queueName: string, message: string, callback: (result: boolean | string | null, err: string | null) => void) {
         amqp.connect(
             "amqp://dbdolphin.viter.dk:5672",
             function(err: Error, conn: any) {
                 if (err) {
-                    reject(err);
+                    callback(null, err.message);
                     return;
                 }
                 conn.createChannel(function(err: Error, ch: any) {
                     if (err) {
                         console.log(err);
-                        reject(err);
+                        callback(null, err.message);
                         return;
                     }
                     console.log(
@@ -122,28 +113,25 @@ export function sendToBingoBank(queueName: string, message: string) {
                     ch.publish(queueName, "", Buffer.from(message), {
                         replyTo: "bingoboisReply"
                     });
-                    resolve(true);
+                    callback(true, null);
                 });
             }
         );
-    });
 }
 
 
-export function getFromTranslator(queueName: string): Promise<BankRequest> {
-    return new Promise((resolve, reject) => {
+export function getFromTranslator(queueName: string, callback: (result: BankRequest | null, err: string | null) => void) {
         const connectURL = "amqp://dbdolphin.viter.dk:5672";
         amqp.connect(connectURL, function (err: Error, conn: any) {
             if (err) {
-                reject(err);
+                callback(null, err.message);
             }
             conn.createChannel(function (err: Error, ch: any) {
                 if (err) {
                     console.log(err);
-                    reject(err);
+                    callback(null, err.message);
                     return;
                 }
-                setInterval(() => {
                     ch.assertQueue(queueName, { durable: false });
                     ch.prefetch(1);
                     console.log(`Waiting for data from ${queueName}`);
@@ -153,12 +141,10 @@ export function getFromTranslator(queueName: string): Promise<BankRequest> {
                             loanRequest: JSON.parse(message.content.toString("utf8")),
                             replyTo: message.properties.replyTo
                         }
-                        resolve(bankRequest)
+                        callback(bankRequest, null)
                         ch.ack(message);
                     }, {noAck: false});
-                }, 100)
                
             });
         })
-    })
 }
