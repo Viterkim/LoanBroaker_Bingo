@@ -8,6 +8,6 @@ const CPHBUSINESS_BANK_URL = "datdb.cphbusiness.dk:5672"
 
 
 
-getFromBank(`bingoboisReply`).then(result => {
+getFromBank(`bingoboisReply`, result => {
 
 });
