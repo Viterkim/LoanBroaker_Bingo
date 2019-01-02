@@ -9,7 +9,7 @@ interface LoanResponse{
 switch(parseInt(process.argv[2])){
     case 1:
         console.log("Listening to ViktoBanken")
-        getFromTranslator(`bingobango`, (result, err) => {
+        getFromTranslator(`viktobanken`, (result, err) => {
             if(err){
                 console.error(err);
                 return;
