@@ -17,15 +17,15 @@ router.post('/', (req, res) => {
         getCreditScoreFromService(loanObject.ssn).then((creditScore) => {
             loanObject.creditScore = creditScore.creditScore;
             console.log(`LoanObject: ${JSON.stringify(loanObject)}`);
-            sendToRabbit(JSON.stringify(loanObject), "CreditService").then((result) => {
+            sendToRabbit(JSON.stringify(loanObject), "CreditService", (result, err) => {
+                if(err){
+                    console.error(err);
+                    return;
+                }
                 res.json({
                     message: `Your credit score for ssn: ${loanObject.ssn} is: ${loanObject.creditScore}`
                 });
-            }).catch((err) => {
-                res.json({
-                    error: `${err}`
-                });
-            });
+            })
         }).catch((err) => {
             res.json({
                 error: `${err}`

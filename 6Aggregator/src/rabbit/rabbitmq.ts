@@ -4,19 +4,17 @@ interface rabbitMessage {
     content: Buffer;
 }
 
-export function getFromRabbit(queueName: string): Promise<string> {
-    return new Promise((resolve, reject) => {
-        const connectURL = "amqp://hgounrgc:dP8MEKG-QdNujnTbDMaaaCQuRaouunIE@flamingo.rmq.cloudamqp.com/hgounrgc";
-        const password = "dP8MEKG-QdNujnTbDMaaaCQuRaouunIE";
+export function getFromRabbit(queueName: string, callback: (result: string | null, err: string | null) => void){
+        const connectURL = "amqp://dbdolphin.viter.dk:5672";
         amqp.connect(connectURL, function (err: Error, conn: any) {
             if (err) {
-                reject(err);
+                callback(null, err.message);
                 return;
             }
             conn.createChannel(function (err: Error, ch: any) {
                 if (err) {
                     console.log(err);
-                    reject(err);
+                    callback(null, err.message);
                     return;
                 }
                 ch.assertQueue(queueName, { durable: false });
@@ -24,10 +22,9 @@ export function getFromRabbit(queueName: string): Promise<string> {
                 //console.log(`Waiting for data from ${queueName}`);
                 ch.consume(queueName, (message: rabbitMessage) => {
                     //TODO: Update rabbitMessage to actual object, content might be a buffer
-                    resolve(message.content.toString('utf8'));
+                    callback(message.content.toString('utf8'), null);
                     ch.ack(message);
                 }, {noAck: false});
             });
         })
-    })
 }
