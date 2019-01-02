@@ -1,8 +1,8 @@
 import mysql, { Connection } from 'mysql';
 
 let connection: Connection = mysql.createConnection({
-    host: 'viter.dk',
-    user: 'transformer',
+    host: 'dbdolphin.viter.dk',
+    user: 'dolphin',
     password: 'mingade',
     database: 'lonebroaker'
 });
