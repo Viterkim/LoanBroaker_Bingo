@@ -34,11 +34,13 @@ export default class SocketManager {
         socket.on('message', (ssn) => {
             console.log(`Received message: ${ssn}`);
             const subscribeID = setInterval(() => {
-                getFromRabbit(`ssn:${ssn}`).then((data) => {
+                getFromRabbit(`ssn:${ssn}`, (data, err) => {
+                    if(err){
+                        console.error(err);
+                        return;
+                    }
                     socket.send(data);
-                }).catch((err) => {
-                    console.log(err);
-                });
+                })
 
                 /* This is for testing, uncomment if doing localhost setup
 
