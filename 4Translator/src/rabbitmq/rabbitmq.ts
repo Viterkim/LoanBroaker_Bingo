@@ -13,7 +13,6 @@ export function getFromRabbit(queueName: string, callback: (result: string | nul
             }
             if(conn){
                 conn.createChannel(function (err: Error, ch: any) {
-                    setInterval(() => {
                         if (err) {
                             console.log(err);
                             callback(null, err.message);
@@ -27,7 +26,6 @@ export function getFromRabbit(queueName: string, callback: (result: string | nul
                             callback(message.content.toString('utf8'), null);
                             ch.ack(message);
                         }, {noAck: false});
-                    }, 100);
                 });
             }
         })
