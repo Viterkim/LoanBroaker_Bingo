@@ -6,8 +6,7 @@ interface rabbitMessage {
 
 export function getFromRabbit(queueName: string): Promise<string> {
     return new Promise((resolve, reject) => {
-        const connectURL = "amqp://hgounrgc:dP8MEKG-QdNujnTbDMaaaCQuRaouunIE@flamingo.rmq.cloudamqp.com/hgounrgc";
-        const password = "dP8MEKG-QdNujnTbDMaaaCQuRaouunIE";
+        const connectURL = "amqp://dbdolphin.viter.dk:5672";
         amqp.connect(connectURL, function (err: Error, conn: any) {
             if (err) {
                 reject(err);
